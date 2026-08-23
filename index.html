@@ -1,564 +1,97 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-
-<meta charset="utf-8">
-
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1"
->
-
-<title>HSE Report</title>
-
+<!-- Include Forminit SDK -->
 <script src="https://forminit.com/sdk/v1/forminit.js"></script>
 
-<style>
-
-*{
-  box-sizing:border-box;
-}
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  color:#17202a;
-  min-height:100vh;
-
-  background:
-    linear-gradient(
-      rgba(235,240,244,0.86),
-      rgba(235,240,244,0.90)
-    ),
-    url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=2000&q=80')
-    center/cover fixed;
-}
-
-.wrap{
-  max-width:620px;
-  margin:auto;
-  padding:24px 16px;
-}
-
-.card{
-  background:rgba(255,255,255,0.91);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-
-  border-radius:18px;
-  padding:24px;
-
-  box-shadow:0 8px 30px rgba(0,0,0,.14);
-
-  border:1px solid rgba(255,255,255,0.75);
-}
-
-h1{
-  margin:0 0 6px;
-  font-size:28px;
-}
-
-.sub{
-  margin:0 0 22px;
-  color:#667085;
-  line-height:1.45;
-}
-
-label{
-  display:block;
-  font-weight:700;
-  margin:16px 0 7px;
-}
-
-select,
-textarea,
-input{
-  width:100%;
-  padding:13px;
-
-  border:1px solid #d0d5dd;
-  border-radius:9px;
-
-  font-size:16px;
-  background:rgba(255,255,255,0.96);
-}
-
-textarea{
-  min-height:120px;
-  resize:vertical;
-}
-
-.btn{
-  width:100%;
-  border:0;
-  border-radius:10px;
-
-  padding:14px;
-
-  font-size:17px;
-  font-weight:700;
-
-  cursor:pointer;
-  margin-top:20px;
-}
-
-.submit{
-  background:#b42318;
-  color:#fff;
-}
-
-.submit:disabled{
-  opacity:0.65;
-  cursor:not-allowed;
-}
-
-.hint{
-  font-size:13px;
-  color:#667085;
-  margin-top:6px;
-}
-
-.photo-name{
-  font-size:13px;
-  color:#475467;
-  margin-top:8px;
-}
-
-.success{
-  background:rgba(236,253,243,0.95);
-  border-radius:10px;
-
-  padding:14px;
-  margin-top:18px;
-}
-
-.error{
-  background:rgba(254,226,226,0.95);
-  border-radius:10px;
-
-  padding:14px;
-  margin-top:18px;
-
-  color:#991b1b;
-  word-break:break-word;
-  white-space:pre-wrap;
-}
-
-.hidden{
-  display:none;
-}
-
-.footer{
-  text-align:center;
-  color:#475467;
-
-  font-size:12px;
-  margin-top:18px;
-}
-
-</style>
-
-</head>
-
-
-<body>
-
-
-<div class="wrap">
-
-<div class="card">
-
-
-<h1>HSE Report</h1>
-
-
-<p class="sub">
-
-Quickly report an incident, hazard, near miss,
-fire-related incident, or other HSE concern.
-
-</p>
-
-
-<form
-  id="hseForm"
-  enctype="multipart/form-data"
->
-
-
-<label for="location">
-Location
-</label>
-
-
-<input
-  id="location"
-  name="fi-text-location"
-  type="text"
-  placeholder="Enter location"
-  required
->
-
-
-<label for="type">
-Report type
-</label>
-
-
-<select
-  id="type"
-  name="fi-select-reportType"
-  required
->
-
-<option>Incident</option>
-<option>Hazard</option>
-<option>Near Miss</option>
-<option>Fire-related Incident</option>
-<option>Other</option>
-
-</select>
-
-
-<label for="severity">
-Severity
-</label>
-
-
-<select
-  id="severity"
-  name="fi-select-severity"
-  required
->
-
-<option>Minor</option>
-<option>Moderate</option>
-<option>Major</option>
-<option>Catastrophic</option>
-
-</select>
-
-
-<label for="description">
-Description
-</label>
-
-
-<textarea
-  id="description"
-  name="fi-text-description"
-  placeholder="Briefly describe what happened or what you observed..."
-  required
-></textarea>
-
-
-<label for="photo">
-Photo
-</label>
-
-
-<input
-  id="photo"
-  name="fi-file-photo"
-  type="file"
-  accept="image/*"
-  capture="environment"
->
-
-
-<div class="hint">
-
-Optional. On a phone, this can open the camera.
-
-</div>
-
-
-<div
-  id="photoName"
-  class="photo-name"
-></div>
-
-
-<button
-  id="submitButton"
-  class="btn submit"
-  type="submit"
->
-
-Submit Report
-
-</button>
-
-
+<!-- Your Form -->
+<form id="contact-form" enctype="multipart/form-data">
+
+  <!-- sender: who submitted the form -->
+  <input name="fi-sender-firstName" placeholder="First name" />
+  <input name="fi-sender-lastName"  placeholder="Last name" />
+  <!-- Single-field alternative to firstName/lastName -->
+  <input name="fi-sender-fullName"  placeholder="Full name" />
+  <input name="fi-sender-email"     placeholder="Email" />
+  <input name="fi-sender-phone"     placeholder="Phone" />
+  <input name="fi-sender-title"     placeholder="Title (Mr., Ms., Dr.)" />
+  <input name="fi-sender-company"   placeholder="Company" />
+  <input name="fi-sender-position"  placeholder="Job title" />
+  <input name="fi-sender-address"   placeholder="Address" />
+  <input name="fi-sender-address2"  placeholder="Address line 2 (apt, suite, etc.)" />
+  <input name="fi-sender-city"      placeholder="City" />
+  <input name="fi-sender-postcode"  placeholder="Postcode / ZIP" />
+  <input name="fi-sender-country"   placeholder="Country (ISO 3166-1 alpha-2, e.g. US)" />
+  <input type="hidden" name="fi-sender-userId" value="ext_12345" />
+
+  <!-- text: free-form answer, no validation -->
+  <textarea name="fi-text-message" placeholder="Message"></textarea>
+
+  <!-- number: any numeric value -->
+  <input type="number" name="fi-number-budget" placeholder="Budget" />
+
+  <!-- email: a second email beyond the sender's -->
+  <input type="email" name="fi-email-invitee" placeholder="Invitee email" />
+
+  <!-- phone: a second phone beyond the sender's, E.164 format -->
+  <input type="tel" name="fi-phone-emergency" placeholder="Emergency contact" />
+
+  <!-- url: validated as a URL -->
+  <input type="url" name="fi-url-website" placeholder="Your website" />
+
+  <!-- select: single or multi choice -->
+  <select name="fi-select-plan">
+    <option value="basic">Basic</option>
+    <option value="pro">Pro</option>
+    <option value="enterprise">Enterprise</option>
+  </select>
+
+  <!-- radio: single choice from a group -->
+  <label><input type="radio" name="fi-radio-priority" value="low"  /> Low</label>
+  <label><input type="radio" name="fi-radio-priority" value="high" /> High</label>
+
+  <!-- checkbox: one or more choices, same name = array -->
+  <label><input type="checkbox" name="fi-checkbox-features" value="api" />     API</label>
+  <label><input type="checkbox" name="fi-checkbox-features" value="support" /> Support</label>
+
+  <!-- rating: integer between 1 and 5 -->
+  <input type="range" name="fi-rating-satisfaction" min="1" max="5" step="1" value="3" />
+
+  <!-- date: ISO 8601 date or date-time -->
+  <input type="date" name="fi-date-appointment" />
+
+  <!-- file: requires multipart/form-data (FormData uses it by default) -->
+  <input type="file" name="fi-file-resume" />
+  <!-- Multiple files: append [] to the name and add the multiple attribute -->
+  <input type="file" name="fi-file-attachments[]" multiple />
+
+  <!-- country: ISO 3166-1 alpha-2 code. Full list: https://gist.github.com/ssskip/5a94bfcd2835bf1dea52 -->
+  <select name="fi-country-shipping">
+    <option value="US">United States</option>
+    <option value="GB">United Kingdom</option>
+  </select>
+
+  <!-- tracking: auto-captured by the SDK from URL params and referrer -->
+
+  <button type="submit">Send</button>
+  <p id="form-status"></p>
 </form>
 
-
-<div
-  id="success"
-  class="success hidden"
->
-
-<strong>
-Report Submitted Successfully
-</strong>
-
-<p>
-Your HSE report has been received.
-</p>
-
-</div>
-
-
-<div
-  id="error"
-  class="error hidden"
-></div>
-
-
-</div>
-
-
-<div class="footer">
-
-HSE Reporting System
-
-</div>
-
-
-</div>
-
-
 <script>
+  const forminit = new Forminit();
+  const FORM_ID = "iutxcgqyigf";
 
-
-const FORMINIT_FORM_ID =
-  "iutxcgqyigf";
-
-
-const forminit =
-  new Forminit();
-
-
-const form =
-  document.getElementById(
-    "hseForm"
-  );
-
-
-const submitButton =
-  document.getElementById(
-    "submitButton"
-  );
-
-
-const success =
-  document.getElementById(
-    "success"
-  );
-
-
-const errorBox =
-  document.getElementById(
-    "error"
-  );
-
-
-const photoInput =
-  document.getElementById(
-    "photo"
-  );
-
-
-const photoName =
-  document.getElementById(
-    "photoName"
-  );
-
-
-
-// Photo preview
-
-photoInput.addEventListener(
-  "change",
-  function(){
-
-    if(this.files.length > 0){
-
-      photoName.textContent =
-        "Photo selected: " +
-        this.files[0].name;
-
-    }else{
-
-      photoName.textContent = "";
-
-    }
-
-  }
-);
-
-
-
-// Submit report
-
-form.addEventListener(
-  "submit",
-  async function(e){
-
+  document.getElementById("contact-form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    const formData = new FormData(e.target);
+    const { data, error } = await forminit.submit(FORM_ID, formData);
 
-    errorBox.classList.add(
-      "hidden"
-    );
+    const status = document.getElementById("form-status");
 
-
-    success.classList.add(
-      "hidden"
-    );
-
-
-    submitButton.disabled =
-      true;
-
-
-    submitButton.textContent =
-      "Submitting...";
-
-
-    try{
-
-
-      const formData =
-        new FormData(form);
-
-
-      console.log(
-        "Sending FormData to Forminit..."
-      );
-
-
-      const result =
-        await forminit.submit(
-          FORMINIT_FORM_ID,
-          formData
-        );
-
-
-      console.log(
-        "Forminit response:",
-        result
-      );
-
-
-      if(
-        result &&
-        result.error
-      ){
-
-        let errorDetails;
-
-        try{
-
-          errorDetails =
-            JSON.stringify(
-              result.error,
-              null,
-              2
-            );
-
-        }catch{
-
-          errorDetails =
-            String(
-              result.error
-            );
-
-        }
-
-        throw new Error(
-          errorDetails
-        );
-
-      }
-
-
-      form.classList.add(
-        "hidden"
-      );
-
-
-      success.classList.remove(
-        "hidden"
-      );
-
-
-      success.scrollIntoView({
-        behavior:"smooth"
-      });
-
-
-    }catch(err){
-
-
-      console.error(
-        "FORMINIT ERROR:",
-        err
-      );
-
-
-      submitButton.disabled =
-        false;
-
-
-      submitButton.textContent =
-        "Submit Report";
-
-
-      let message;
-
-
-      try{
-
-        message =
-          err.message ||
-          JSON.stringify(
-            err,
-            null,
-            2
-          );
-
-      }catch{
-
-        message =
-          String(err);
-
-      }
-
-
-      errorBox.textContent =
-        "FORMINIT ERROR:\n\n" +
-        message;
-
-
-      errorBox.classList.remove(
-        "hidden"
-      );
-
-
-      errorBox.scrollIntoView({
-        behavior:"smooth"
-      );
-
+    if (error) {
+      status.textContent = error.message;
+      return;
     }
 
-  }
-);
-
+    status.textContent = "Message sent successfully!";
+    e.target.reset();
+  });
 </script>
-
-
-</body>
-
-</html>
