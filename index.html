@@ -45,6 +45,7 @@ body{
   background:rgba(255,255,255,0.91);
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
+
   border-radius:18px;
   padding:24px;
 
@@ -76,8 +77,10 @@ textarea,
 input{
   width:100%;
   padding:13px;
+
   border:1px solid #d0d5dd;
   border-radius:9px;
+
   font-size:16px;
   background:rgba(255,255,255,0.96);
 }
@@ -91,9 +94,12 @@ textarea{
   width:100%;
   border:0;
   border-radius:10px;
+
   padding:14px;
+
   font-size:17px;
   font-weight:700;
+
   cursor:pointer;
   margin-top:20px;
 }
@@ -123,25 +129,30 @@ textarea{
 .success{
   background:rgba(236,253,243,0.95);
   border-radius:10px;
+
   padding:14px;
   margin-top:18px;
+}
+
+.error{
+  background:rgba(254,226,226,0.95);
+  border-radius:10px;
+
+  padding:14px;
+  margin-top:18px;
+
+  color:#991b1b;
+  word-break:break-word;
 }
 
 .hidden{
   display:none;
 }
 
-.error{
-  background:rgba(254,226,226,0.95);
-  border-radius:10px;
-  padding:14px;
-  margin-top:18px;
-  color:#991b1b;
-}
-
 .footer{
   text-align:center;
   color:#475467;
+
   font-size:12px;
   margin-top:18px;
 }
@@ -150,24 +161,36 @@ textarea{
 
 </head>
 
+
 <body>
+
 
 <div class="wrap">
 
 <div class="card">
 
+
 <h1>HSE Report</h1>
 
+
 <p class="sub">
+
 Quickly report an incident, hazard, near miss,
 fire-related incident, or other HSE concern.
+
 </p>
 
-<form id="hseForm" enctype="multipart/form-data">
+
+<form
+  id="hseForm"
+  enctype="multipart/form-data"
+>
+
 
 <label for="location">
 Location
 </label>
+
 
 <input
   id="location"
@@ -177,9 +200,11 @@ Location
   required
 >
 
+
 <label for="type">
 Report type
 </label>
+
 
 <select
   id="type"
@@ -195,9 +220,11 @@ Report type
 
 </select>
 
+
 <label for="severity">
 Severity
 </label>
+
 
 <select
   id="severity"
@@ -212,9 +239,11 @@ Severity
 
 </select>
 
+
 <label for="description">
 Description
 </label>
+
 
 <textarea
   id="description"
@@ -223,9 +252,11 @@ Description
   required
 ></textarea>
 
+
 <label for="photo">
 Photo
 </label>
+
 
 <input
   id="photo"
@@ -235,24 +266,33 @@ Photo
   capture="environment"
 >
 
+
 <div class="hint">
+
 Optional. On a phone, this can open the camera.
+
 </div>
+
 
 <div
   id="photoName"
   class="photo-name"
 ></div>
 
+
 <button
   id="submitButton"
   class="btn submit"
   type="submit"
 >
+
 Submit Report
+
 </button>
 
+
 </form>
+
 
 <div
   id="success"
@@ -269,43 +309,77 @@ Your HSE report has been received.
 
 </div>
 
+
 <div
   id="error"
   class="error hidden"
-></div>
+>
 
 </div>
+
+
+</div>
+
 
 <div class="footer">
+
 HSE Reporting System
-</div>
 
 </div>
+
+
+</div>
+
 
 <script>
 
-const FORMINIT_FORM_ID = "iutxcgqyigf";
 
-const forminit = new Forminit();
+const FORMINIT_FORM_ID =
+  "iutxcgqyigf";
+
+
+const forminit =
+  new Forminit();
+
 
 const form =
-  document.getElementById("hseForm");
+  document.getElementById(
+    "hseForm"
+  );
+
 
 const submitButton =
-  document.getElementById("submitButton");
+  document.getElementById(
+    "submitButton"
+  );
+
 
 const success =
-  document.getElementById("success");
+  document.getElementById(
+    "success"
+  );
+
 
 const errorBox =
-  document.getElementById("error");
+  document.getElementById(
+    "error"
+  );
+
 
 const photoInput =
-  document.getElementById("photo");
+  document.getElementById(
+    "photo"
+  );
+
 
 const photoName =
-  document.getElementById("photoName");
+  document.getElementById(
+    "photoName"
+  );
 
+
+
+// Show selected photo
 
 photoInput.addEventListener(
   "change",
@@ -327,38 +401,40 @@ photoInput.addEventListener(
 );
 
 
+
+// Submit form
+
 form.addEventListener(
   "submit",
   async function(e){
 
     e.preventDefault();
 
-    errorBox.classList.add("hidden");
 
-    success.classList.add("hidden");
+    errorBox.classList.add(
+      "hidden"
+    );
 
-    submitButton.disabled = true;
+
+    success.classList.add(
+      "hidden"
+    );
+
+
+    submitButton.disabled =
+      true;
+
 
     submitButton.textContent =
       "Submitting...";
 
+
     try{
+
 
       const formData =
         new FormData(form);
 
-      const reported =
-        new Date().toLocaleString(
-          "en-GB",
-          {
-            timeZone:"Asia/Qatar"
-          }
-        );
-
-      formData.append(
-        "fi-date-reported",
-        reported
-      );
 
       const result =
         await forminit.submit(
@@ -366,36 +442,65 @@ form.addEventListener(
           formData
         );
 
+
       if(result.error){
 
         throw new Error(
           result.error.message ||
-          "Unable to submit the report."
+          "Forminit rejected the submission."
         );
 
       }
 
-      form.classList.add("hidden");
 
-      success.classList.remove("hidden");
+      form.classList.add(
+        "hidden"
+      );
+
+
+      success.classList.remove(
+        "hidden"
+      );
+
 
       success.scrollIntoView({
         behavior:"smooth"
       });
 
+
     }catch(err){
 
-      console.error(err);
 
-      submitButton.disabled = false;
+      console.error(
+        "Forminit error:",
+        err
+      );
+
+
+      submitButton.disabled =
+        false;
+
 
       submitButton.textContent =
         "Submit Report";
 
-      errorBox.textContent =
-        "Unable to submit the report. Please try again.";
 
-      errorBox.classList.remove("hidden");
+      errorBox.textContent =
+        "Forminit error: " +
+        (
+          err.message ||
+          "Unknown error"
+        );
+
+
+      errorBox.classList.remove(
+        "hidden"
+      );
+
+
+      errorBox.scrollIntoView({
+        behavior:"smooth"
+      );
 
     }
 
@@ -403,6 +508,7 @@ form.addEventListener(
 );
 
 </script>
+
 
 </body>
 
