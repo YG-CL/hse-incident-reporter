@@ -2,17 +2,9 @@
 <html lang="en">
 
 <head>
-
 <meta charset="utf-8">
-
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1"
->
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HSE Report</title>
-
-<script src="https://forminit.com/sdk/v1/forminit.js"></script>
 
 <style>
 
@@ -45,12 +37,9 @@ body{
   background:rgba(255,255,255,0.91);
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
-
   border-radius:18px;
   padding:24px;
-
   box-shadow:0 8px 30px rgba(0,0,0,.14);
-
   border:1px solid rgba(255,255,255,0.75);
 }
 
@@ -76,10 +65,8 @@ textarea,
 input{
   width:100%;
   padding:13px;
-
   border:1px solid #d0d5dd;
   border-radius:9px;
-
   font-size:16px;
   background:rgba(255,255,255,0.96);
 }
@@ -93,12 +80,9 @@ textarea{
   width:100%;
   border:0;
   border-radius:10px;
-
   padding:14px;
-
   font-size:17px;
   font-weight:700;
-
   cursor:pointer;
   margin-top:20px;
 }
@@ -116,7 +100,6 @@ textarea{
 .success{
   background:rgba(236,253,243,0.95);
   border-radius:10px;
-
   padding:14px;
   margin-top:18px;
 }
@@ -124,10 +107,8 @@ textarea{
 .error{
   background:rgba(254,226,226,0.95);
   border-radius:10px;
-
   padding:14px;
   margin-top:18px;
-
   color:#991b1b;
   white-space:pre-wrap;
   word-break:break-word;
@@ -140,38 +121,29 @@ textarea{
 .footer{
   text-align:center;
   color:#475467;
-
   font-size:12px;
   margin-top:18px;
 }
 
 </style>
-
 </head>
 
 
 <body>
 
-
 <div class="wrap">
-
 
 <div class="card">
 
-
 <h1>HSE Report</h1>
 
-
 <p class="sub">
-
 Quickly report an incident, hazard, near miss,
 fire-related incident, or other HSE concern.
-
 </p>
 
 
 <form id="hse-form">
-
 
 <label for="reportLocation">
 Location
@@ -196,25 +168,11 @@ Report type
   required
 >
 
-<option value="Incident">
-Incident
-</option>
-
-<option value="Hazard">
-Hazard
-</option>
-
-<option value="Near Miss">
-Near Miss
-</option>
-
-<option value="Fire-related Incident">
-Fire-related Incident
-</option>
-
-<option value="Other">
-Other
-</option>
+<option value="Incident">Incident</option>
+<option value="Hazard">Hazard</option>
+<option value="Near Miss">Near Miss</option>
+<option value="Fire-related Incident">Fire-related Incident</option>
+<option value="Other">Other</option>
 
 </select>
 
@@ -229,21 +187,10 @@ Severity
   required
 >
 
-<option value="Minor">
-Minor
-</option>
-
-<option value="Moderate">
-Moderate
-</option>
-
-<option value="Major">
-Major
-</option>
-
-<option value="Catastrophic">
-Catastrophic
-</option>
+<option value="Minor">Minor</option>
+<option value="Moderate">Moderate</option>
+<option value="Major">Major</option>
+<option value="Catastrophic">Catastrophic</option>
 
 </select>
 
@@ -261,6 +208,7 @@ Description
 
 
 <button
+  id="submitButton"
   class="btn submit"
   type="submit"
 >
@@ -268,7 +216,6 @@ Description
 Submit Report
 
 </button>
-
 
 </form>
 
@@ -299,42 +246,25 @@ Your HSE report has been received.
 
 
 <div class="footer">
-
 HSE Reporting System
-
 </div>
-
 
 </div>
 
 
 <script>
 
-
-const forminit =
-  new Forminit();
-
-
-const FORM_ID =
-  "2crw9bc8f8i";
-
-
 const form =
-  document.getElementById(
-    "hse-form"
-  );
+  document.getElementById("hse-form");
 
+const button =
+  document.getElementById("submitButton");
 
 const success =
-  document.getElementById(
-    "success"
-  );
-
+  document.getElementById("success");
 
 const errorBox =
-  document.getElementById(
-    "error"
-  );
+  document.getElementById("error");
 
 
 form.addEventListener(
@@ -343,72 +273,55 @@ form.addEventListener(
 
     e.preventDefault();
 
+    button.disabled = true;
+    button.textContent = "Submitting...";
 
-    success.classList.add(
-      "hidden"
-    );
-
-
-    errorBox.classList.add(
-      "hidden"
-    );
-
-
-    const button =
-      form.querySelector(
-        "button[type='submit']"
-      );
-
-
-    button.disabled =
-      true;
-
-
-    button.textContent =
-      "Submitting...";
+    success.classList.add("hidden");
+    errorBox.classList.add("hidden");
 
 
     try{
-
 
       const formData =
         new FormData(form);
 
 
-      const result =
-        await forminit.submit(
-          FORM_ID,
-          formData
+      const response =
+        await fetch(
+          "https://forminit.com/f/2crw9bc8f8i",
+          {
+            method:"POST",
+            body:formData
+          }
         );
+
+
+      const text =
+        await response.text();
 
 
       console.log(
         "Forminit response:",
-        result
+        response.status,
+        text
       );
 
 
-      if(result.error){
+      if(!response.ok){
 
         throw new Error(
-          result.error.message ||
-          JSON.stringify(
-            result.error
-          )
+          "HTTP " +
+          response.status +
+          ": " +
+          text
         );
 
       }
 
 
-      form.classList.add(
-        "hidden"
-      );
+      form.classList.add("hidden");
 
-
-      success.classList.remove(
-        "hidden"
-      );
-
+      success.classList.remove("hidden");
 
       success.scrollIntoView({
         behavior:"smooth"
@@ -417,30 +330,15 @@ form.addEventListener(
 
     }catch(error){
 
-
-      console.error(
-        "Forminit error:",
-        error
-      );
-
+      console.error(error);
 
       errorBox.textContent =
         "Unable to submit the report.\n\n" +
-        "Error: " +
-        (
-          error.message ||
-          String(error)
-        );
+        error.message;
 
+      errorBox.classList.remove("hidden");
 
-      errorBox.classList.remove(
-        "hidden"
-      );
-
-
-      button.disabled =
-        false;
-
+      button.disabled = false;
 
       button.textContent =
         "Submit Report";
@@ -452,7 +350,5 @@ form.addEventListener(
 
 </script>
 
-
 </body>
-
 </html>
