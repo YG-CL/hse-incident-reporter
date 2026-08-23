@@ -47,6 +47,7 @@ h1{
 .sub{
   margin:0 0 22px;
   color:#667085;
+  line-height:1.4;
 }
 
 label{
@@ -123,124 +124,111 @@ textarea{
 
 <div class="wrap">
 
-  <div class="card">
+<div class="card">
 
-    <h1>HSE Report</h1>
+<h1>HSE Report</h1>
 
-    <p class="sub">
-      Quickly report an incident, near miss, or fire-related issue.
-    </p>
-
-
-    <!-- LOCATION -->
-
-    <label for="location">Location</label>
-
-    <input
-      id="location"
-      type="text"
-      placeholder="Enter location"
-    >
+<p class="sub">
+Quickly report an incident, hazard, near miss, fire-related incident, or other HSE concern.
+</p>
 
 
-    <!-- REPORT TYPE -->
+<label for="location">Location</label>
 
-    <label for="type">Report type</label>
-
-    <select id="type">
-
-      <option>Incident</option>
-
-      <option>Near Miss</option>
-
-      <option>Fire-related</option>
-
-      <option>Other</option>
-
-    </select>
+<input
+  id="location"
+  type="text"
+  placeholder="Enter location"
+>
 
 
-    <!-- SEVERITY -->
+<label for="type">Report type</label>
 
-    <label for="severity">Severity</label>
+<select id="type">
 
-    <select id="severity">
+<option>Incident</option>
 
-      <option>Low</option>
+<option>Hazard</option>
 
-      <option>Medium</option>
+<option>Near Miss</option>
 
-      <option>High</option>
+<option>Fire-related Incident</option>
 
-      <option>Critical</option>
+<option>Other</option>
 
-    </select>
-
-
-    <!-- DESCRIPTION -->
-
-    <label for="description">Description</label>
-
-    <textarea
-      id="description"
-      placeholder="Briefly describe what happened or what you observed..."
-    ></textarea>
+</select>
 
 
-    <!-- PHOTO -->
+<label for="severity">Severity</label>
 
-    <label for="photo">Photo</label>
+<select id="severity">
 
-    <input
-      id="photo"
-      type="file"
-      accept="image/*"
-      capture="environment"
-    >
+<option>Minor</option>
 
-    <div class="hint">
-      Optional. On a phone, this can open the camera.
-    </div>
+<option>Moderate</option>
 
+<option>Major</option>
 
-    <!-- SUBMIT -->
+<option>Catastrophic</option>
 
-    <button
-      class="btn submit"
-      onclick="prepareReport()"
-    >
-      Submit Report
-    </button>
+</select>
 
 
-    <!-- SUCCESS -->
+<label for="description">Description</label>
 
-    <div
-      id="success"
-      class="success hidden"
-    >
-
-      <strong>Report prepared.</strong>
-
-      <p>
-        Your report is ready to send to WhatsApp.
-      </p>
-
-      <button
-        class="btn wa"
-        onclick="sendWhatsApp()"
-      >
-        Send to WhatsApp
-      </button>
-
-    </div>
-
-  </div>
+<textarea
+  id="description"
+  placeholder="Briefly describe what happened or what you observed..."
+></textarea>
 
 
-  <div class="footer">
-    HSE Reporting System
-  </div>
+<label for="photo">Photo</label>
+
+<input
+  id="photo"
+  type="file"
+  accept="image/*"
+  capture="environment"
+>
+
+<div class="hint">
+Optional. On a phone, this can open the camera.
+</div>
+
+
+<button
+  class="btn submit"
+  onclick="prepareReport()"
+>
+Submit Report
+</button>
+
+
+<div
+  id="success"
+  class="success hidden"
+>
+
+<strong>Report prepared.</strong>
+
+<p>
+Your report is ready to send to WhatsApp.
+</p>
+
+<button
+  class="btn wa"
+  onclick="sendWhatsApp()"
+>
+Send to WhatsApp
+</button>
+
+</div>
+
+</div>
+
+<div class="footer">
+HSE Reporting System
+</div>
 
 </div>
 
@@ -252,85 +240,85 @@ let message = '';
 
 function prepareReport(){
 
-  const location =
-    document.getElementById('location').value.trim();
+const location =
+document.getElementById('location').value.trim();
 
-  if(!location){
+if(!location){
 
-    alert('Please enter a location.');
+alert('Please enter a location.');
 
-    return;
+return;
 
-  }
-
-
-  const description =
-    document.getElementById('description').value.trim();
-
-  if(!description){
-
-    alert('Please enter a description.');
-
-    return;
-
-  }
+}
 
 
-  const type =
-    document.getElementById('type').value;
+const description =
+document.getElementById('description').value.trim();
+
+if(!description){
+
+alert('Please enter a description.');
+
+return;
+
+}
 
 
-  const severity =
-    document.getElementById('severity').value;
+const type =
+document.getElementById('type').value;
 
 
-  const t =
-    new Date().toLocaleString();
+const severity =
+document.getElementById('severity').value;
 
 
-  message =
-    '🚨 NEW HSE REPORT\n\n' +
-
-    '📍 Location: ' +
-    location +
-    '\n' +
-
-    '⚠️ Type: ' +
-    type +
-    '\n' +
-
-    '🔴 Severity: ' +
-    severity +
-    '\n' +
-
-    '📝 Description: ' +
-    description +
-    '\n' +
-
-    '🕐 Reported: ' +
-    t;
+const t =
+new Date().toLocaleString();
 
 
-  document
-    .getElementById('success')
-    .classList
-    .remove('hidden');
+message =
+'NEW HSE REPORT\n\n' +
+
+'Location: ' +
+location +
+'\n' +
+
+'Type: ' +
+type +
+'\n' +
+
+'Severity: ' +
+severity +
+'\n' +
+
+'Description: ' +
+description +
+'\n' +
+
+'Reported: ' +
+t;
 
 
-  document
-    .getElementById('success')
-    .scrollIntoView({
-      behavior:'smooth'
-    });
+document
+.getElementById('success')
+.classList
+.remove('hidden');
+
+
+document
+.getElementById('success')
+.scrollIntoView({
+behavior:'smooth'
+});
 
 }
 
 
 function sendWhatsApp(){
 
-  window.location.href =
-    'https://wa.me/?text=' +
-    encodeURIComponent(message);
+window.location.href =
+'https://wa.me/?text=' +
+encodeURIComponent(message);
 
 }
 
