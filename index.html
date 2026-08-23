@@ -12,13 +12,13 @@
 
 <title>HSE Report</title>
 
+<script src="https://forminit.com/sdk/v1/forminit.js"></script>
 
 <style>
 
 *{
   box-sizing:border-box;
 }
-
 
 body{
   margin:0;
@@ -35,22 +35,17 @@ body{
     center/cover fixed;
 }
 
-
 .wrap{
   max-width:620px;
   margin:auto;
   padding:24px 16px;
 }
 
-
 .card{
   background:rgba(255,255,255,0.91);
-
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
-
   border-radius:18px;
-
   padding:24px;
 
   box-shadow:
@@ -59,12 +54,10 @@ body{
   border:1px solid rgba(255,255,255,0.75);
 }
 
-
 h1{
   margin:0 0 6px;
   font-size:28px;
 }
-
 
 .sub{
   margin:0 0 22px;
@@ -72,103 +65,84 @@ h1{
   line-height:1.45;
 }
 
-
 label{
   display:block;
   font-weight:700;
   margin:16px 0 7px;
 }
 
-
 select,
 textarea,
 input{
   width:100%;
-
   padding:13px;
-
   border:1px solid #d0d5dd;
-
   border-radius:9px;
-
   font-size:16px;
-
   background:rgba(255,255,255,0.96);
 }
-
 
 textarea{
   min-height:120px;
   resize:vertical;
 }
 
-
 .btn{
   width:100%;
-
   border:0;
-
   border-radius:10px;
-
   padding:14px;
-
   font-size:17px;
-
   font-weight:700;
-
   cursor:pointer;
-
   margin-top:20px;
 }
-
 
 .submit{
   background:#b42318;
   color:#fff;
 }
 
+.submit:disabled{
+  opacity:0.65;
+  cursor:not-allowed;
+}
+
+.hint{
+  font-size:13px;
+  color:#667085;
+  margin-top:6px;
+}
+
+.photo-name{
+  font-size:13px;
+  color:#475467;
+  margin-top:8px;
+}
+
+.success{
+  background:rgba(236,253,243,0.95);
+  border-radius:10px;
+  padding:14px;
+  margin-top:18px;
+}
 
 .hidden{
   display:none;
 }
 
-
-.success{
-  background:rgba(236,253,243,0.95);
-
+.error{
+  background:rgba(254,226,226,0.95);
   border-radius:10px;
-
   padding:14px;
-
   margin-top:18px;
+  color:#991b1b;
 }
-
-
-.hint{
-  font-size:13px;
-
-  color:#667085;
-
-  margin-top:6px;
-}
-
-
-.photo-name{
-  font-size:13px;
-
-  color:#475467;
-
-  margin-top:8px;
-}
-
 
 .footer{
   text-align:center;
-
   color:#475467;
-
   font-size:12px;
-
   margin-top:18px;
 }
 
@@ -176,123 +150,109 @@ textarea{
 
 </head>
 
-
 <body>
-
 
 <div class="wrap">
 
-
 <div class="card">
-
 
 <h1>HSE Report</h1>
 
-
 <p class="sub">
-
 Quickly report an incident, hazard, near miss,
 fire-related incident, or other HSE concern.
-
 </p>
 
+<form id="hseForm" enctype="multipart/form-data">
 
 <label for="location">
 Location
 </label>
 
-
 <input
   id="location"
+  name="fi-text-location"
   type="text"
   placeholder="Enter location"
+  required
 >
-
 
 <label for="type">
 Report type
 </label>
 
-
-<select id="type">
+<select
+  id="type"
+  name="fi-select-reportType"
+  required
+>
 
 <option>Incident</option>
-
 <option>Hazard</option>
-
 <option>Near Miss</option>
-
 <option>Fire-related Incident</option>
-
 <option>Other</option>
 
 </select>
-
 
 <label for="severity">
 Severity
 </label>
 
-
-<select id="severity">
+<select
+  id="severity"
+  name="fi-select-severity"
+  required
+>
 
 <option>Minor</option>
-
 <option>Moderate</option>
-
 <option>Major</option>
-
 <option>Catastrophic</option>
 
 </select>
-
 
 <label for="description">
 Description
 </label>
 
-
 <textarea
   id="description"
+  name="fi-text-description"
   placeholder="Briefly describe what happened or what you observed..."
+  required
 ></textarea>
-
 
 <label for="photo">
 Photo
 </label>
 
-
 <input
   id="photo"
+  name="fi-file-photo"
   type="file"
   accept="image/*"
   capture="environment"
 >
 
-
 <div class="hint">
-
 Optional. On a phone, this can open the camera.
-
 </div>
-
 
 <div
   id="photoName"
   class="photo-name"
 ></div>
 
-
 <button
+  id="submitButton"
   class="btn submit"
-  onclick="prepareReport()"
+  type="submit"
 >
-
 Submit Report
-
 </button>
 
+</form>
 
 <div
   id="success"
@@ -300,312 +260,149 @@ Submit Report
 >
 
 <strong>
-Report prepared.
+Report Submitted Successfully
 </strong>
 
 <p>
-Your report is ready to submit.
+Your HSE report has been received.
 </p>
 
-
-<button
-  class="btn submit"
-  onclick="sendReport()"
->
-
-Send Report
-
-</button>
-
 </div>
 
+<div
+  id="error"
+  class="error hidden"
+></div>
 
 </div>
-
 
 <div class="footer">
-
 HSE Reporting System
-
 </div>
 
-
 </div>
-
 
 <script>
 
+const FORMINIT_FORM_ID = "iutxcgqyigf";
 
-let message = '';
+const forminit = new Forminit();
+
+const form =
+  document.getElementById("hseForm");
+
+const submitButton =
+  document.getElementById("submitButton");
+
+const success =
+  document.getElementById("success");
+
+const errorBox =
+  document.getElementById("error");
+
+const photoInput =
+  document.getElementById("photo");
+
+const photoName =
+  document.getElementById("photoName");
 
 
-// Show selected photo
-
-document
-  .getElementById('photo')
-  .addEventListener('change', function(){
-
-    const photoName =
-      document.getElementById('photoName');
-
+photoInput.addEventListener(
+  "change",
+  function(){
 
     if(this.files.length > 0){
 
       photoName.textContent =
-        'Photo selected: ' +
+        "Photo selected: " +
         this.files[0].name;
 
     }else{
 
-      photoName.textContent = '';
+      photoName.textContent = "";
 
     }
 
-  });
-
-
-
-// Prepare report
-
-function prepareReport(){
-
-
-  const location =
-    document
-      .getElementById('location')
-      .value
-      .trim();
-
-
-  if(!location){
-
-    alert(
-      'Please enter a location.'
-    );
-
-    return;
-
   }
+);
 
 
-  const description =
-    document
-      .getElementById('description')
-      .value
-      .trim();
+form.addEventListener(
+  "submit",
+  async function(e){
 
+    e.preventDefault();
 
-  if(!description){
+    errorBox.classList.add("hidden");
 
-    alert(
-      'Please enter a description.'
-    );
+    success.classList.add("hidden");
 
-    return;
+    submitButton.disabled = true;
 
-  }
+    submitButton.textContent =
+      "Submitting...";
 
+    try{
 
-  const type =
-    document
-      .getElementById('type')
-      .value;
+      const formData =
+        new FormData(form);
 
+      const reported =
+        new Date().toLocaleString(
+          "en-GB",
+          {
+            timeZone:"Asia/Qatar"
+          }
+        );
 
-  const severity =
-    document
-      .getElementById('severity')
-      .value;
-
-
-  const reported =
-    new Date()
-      .toLocaleString();
-
-
-  message =
-    'NEW HSE REPORT\n\n' +
-
-    'Location: ' +
-    location +
-    '\n' +
-
-    'Type: ' +
-    type +
-    '\n' +
-
-    'Severity: ' +
-    severity +
-    '\n' +
-
-    'Description: ' +
-    description +
-    '\n' +
-
-    'Reported: ' +
-    reported;
-
-
-  document
-    .getElementById('success')
-    .classList
-    .remove('hidden');
-
-
-  document
-    .getElementById('success')
-    .scrollIntoView({
-      behavior:'smooth'
-    });
-
-}
-
-
-
-// Send report to Cloudflare
-
-async function sendReport(){
-
-
-  const location =
-    document
-      .getElementById('location')
-      .value
-      .trim();
-
-
-  const type =
-    document
-      .getElementById('type')
-      .value;
-
-
-  const severity =
-    document
-      .getElementById('severity')
-      .value;
-
-
-  const description =
-    document
-      .getElementById('description')
-      .value
-      .trim();
-
-
-  const reported =
-    new Date()
-      .toLocaleString();
-
-
-  const button =
-    document
-      .querySelector('.success .btn');
-
-
-  button.disabled = true;
-
-  button.textContent =
-    'Submitting...';
-
-
-  try{
-
-
-    const response =
-      await fetch(
-
-        'https://flat-rice-1f24hse-report-backend.cibenlazaro012.workers.dev/',
-
-        {
-
-          method:'POST',
-
-          headers:{
-            'Content-Type':
-              'application/json'
-          },
-
-          body:JSON.stringify({
-
-            location:location,
-
-            type:type,
-
-            severity:severity,
-
-            description:description,
-
-            reported:reported
-
-          })
-
-        }
-
+      formData.append(
+        "fi-date-reported",
+        reported
       );
 
+      const result =
+        await forminit.submit(
+          FORMINIT_FORM_ID,
+          formData
+        );
 
-    const result =
-      await response.json();
+      if(result.error){
 
+        throw new Error(
+          result.error.message ||
+          "Unable to submit the report."
+        );
 
-    if(result.success){
+      }
 
+      form.classList.add("hidden");
 
-      document
-        .getElementById('success')
-        .innerHTML = `
+      success.classList.remove("hidden");
 
-          <strong>
-          Report Submitted Successfully
-          </strong>
+      success.scrollIntoView({
+        behavior:"smooth"
+      });
 
-          <p>
-          Your HSE report has been received.
-          </p>
+    }catch(err){
 
-        `;
+      console.error(err);
 
+      submitButton.disabled = false;
 
-    }else{
+      submitButton.textContent =
+        "Submit Report";
 
+      errorBox.textContent =
+        "Unable to submit the report. Please try again.";
 
-      button.disabled = false;
-
-      button.textContent =
-        'Send Report';
-
-
-      alert(
-        'Unable to submit the report. Please try again.'
-      );
+      errorBox.classList.remove("hidden");
 
     }
 
-
-  }catch(error){
-
-
-    console.error(error);
-
-
-    button.disabled = false;
-
-    button.textContent =
-      'Send Report';
-
-
-    alert(
-      'Unable to connect to the HSE reporting system.'
-    );
-
-
   }
-
-}
+);
 
 </script>
-
 
 </body>
 
