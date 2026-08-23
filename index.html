@@ -2,15 +2,23 @@
 <html lang="en">
 
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
 <title>HSE Report</title>
+
 
 <style>
 
 *{
   box-sizing:border-box;
 }
+
 
 body{
   margin:0;
@@ -27,26 +35,36 @@ body{
     center/cover fixed;
 }
 
+
 .wrap{
   max-width:620px;
   margin:auto;
   padding:24px 16px;
 }
 
+
 .card{
   background:rgba(255,255,255,0.91);
+
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
+
   border-radius:18px;
+
   padding:24px;
-  box-shadow:0 8px 30px rgba(0,0,0,.14);
+
+  box-shadow:
+    0 8px 30px rgba(0,0,0,.14);
+
   border:1px solid rgba(255,255,255,0.75);
 }
+
 
 h1{
   margin:0 0 6px;
   font-size:28px;
 }
+
 
 .sub{
   margin:0 0 22px;
@@ -54,100 +72,161 @@ h1{
   line-height:1.45;
 }
 
+
 label{
   display:block;
   font-weight:700;
   margin:16px 0 7px;
 }
 
+
 select,
 textarea,
 input{
   width:100%;
+
   padding:13px;
+
   border:1px solid #d0d5dd;
+
   border-radius:9px;
+
   font-size:16px;
+
   background:rgba(255,255,255,0.96);
 }
+
 
 textarea{
   min-height:120px;
   resize:vertical;
 }
 
+
 .btn{
   width:100%;
+
   border:0;
+
   border-radius:10px;
+
   padding:14px;
+
   font-size:17px;
+
   font-weight:700;
+
   cursor:pointer;
+
   margin-top:20px;
 }
+
 
 .submit{
   background:#b42318;
   color:#fff;
 }
 
+
 .submit:disabled{
   opacity:.65;
   cursor:not-allowed;
 }
 
+
 .success{
   background:rgba(236,253,243,0.95);
+
   border-radius:10px;
+
   padding:14px;
+
   margin-top:18px;
 }
 
+
 .error{
   background:rgba(254,226,226,0.95);
+
   border-radius:10px;
+
   padding:14px;
+
   margin-top:18px;
+
   color:#991b1b;
+
   white-space:pre-wrap;
+
   word-break:break-word;
 }
+
 
 .hidden{
   display:none;
 }
 
+
+.hint{
+  font-size:13px;
+
+  color:#667085;
+
+  margin-top:6px;
+}
+
+
+.photo-name{
+  font-size:13px;
+
+  color:#475467;
+
+  margin-top:8px;
+}
+
+
 .footer{
   text-align:center;
+
   color:#475467;
+
   font-size:12px;
+
   margin-top:18px;
 }
 
 </style>
+
 </head>
 
 
 <body>
 
+
 <div class="wrap">
+
 
 <div class="card">
 
+
 <h1>HSE Report</h1>
 
+
 <p class="sub">
+
 Quickly report an incident, hazard, near miss,
 fire-related incident, or other HSE concern.
+
 </p>
 
 
 <form id="hse-form">
 
+
 <label for="reportLocation">
 Location
 </label>
+
 
 <input
   id="reportLocation"
@@ -162,17 +241,32 @@ Location
 Report type
 </label>
 
+
 <select
   id="reportType"
   name="fi-select-reportType"
   required
 >
 
-<option value="Incident">Incident</option>
-<option value="Hazard">Hazard</option>
-<option value="Near Miss">Near Miss</option>
-<option value="Fire-related Incident">Fire-related Incident</option>
-<option value="Other">Other</option>
+<option value="Incident">
+Incident
+</option>
+
+<option value="Hazard">
+Hazard
+</option>
+
+<option value="Near Miss">
+Near Miss
+</option>
+
+<option value="Fire-related Incident">
+Fire-related Incident
+</option>
+
+<option value="Other">
+Other
+</option>
 
 </select>
 
@@ -181,16 +275,28 @@ Report type
 Severity
 </label>
 
+
 <select
   id="reportSeverity"
   name="fi-select-reportSeverity"
   required
 >
 
-<option value="Minor">Minor</option>
-<option value="Moderate">Moderate</option>
-<option value="Major">Major</option>
-<option value="Catastrophic">Catastrophic</option>
+<option value="Minor">
+Minor
+</option>
+
+<option value="Moderate">
+Moderate
+</option>
+
+<option value="Major">
+Major
+</option>
+
+<option value="Catastrophic">
+Catastrophic
+</option>
 
 </select>
 
@@ -199,12 +305,40 @@ Severity
 Description
 </label>
 
+
 <textarea
   id="reportDescription"
   name="fi-text-reportDescription"
   placeholder="Briefly describe what happened or what you observed..."
   required
 ></textarea>
+
+
+<label for="photo">
+Photo
+</label>
+
+
+<input
+  id="photo"
+  name="fi-file-photo"
+  type="file"
+  accept="image/*"
+  capture="environment"
+>
+
+
+<div class="hint">
+
+Optional. On a phone, this can open the camera.
+
+</div>
+
+
+<div
+  id="photoName"
+  class="photo-name"
+></div>
 
 
 <button
@@ -216,6 +350,7 @@ Description
 Submit Report
 
 </button>
+
 
 </form>
 
@@ -246,25 +381,74 @@ Your HSE report has been received.
 
 
 <div class="footer">
+
 HSE Reporting System
+
 </div>
+
 
 </div>
 
 
 <script>
 
+
 const form =
-  document.getElementById("hse-form");
+  document.getElementById(
+    "hse-form"
+  );
+
 
 const button =
-  document.getElementById("submitButton");
+  document.getElementById(
+    "submitButton"
+  );
+
 
 const success =
-  document.getElementById("success");
+  document.getElementById(
+    "success"
+  );
+
 
 const errorBox =
-  document.getElementById("error");
+  document.getElementById(
+    "error"
+  );
+
+
+const photo =
+  document.getElementById(
+    "photo"
+  );
+
+
+const photoName =
+  document.getElementById(
+    "photoName"
+  );
+
+
+
+photo.addEventListener(
+  "change",
+  function(){
+
+    if(this.files.length > 0){
+
+      photoName.textContent =
+        "Photo selected: " +
+        this.files[0].name;
+
+    }else{
+
+      photoName.textContent = "";
+
+    }
+
+  }
+);
+
 
 
 form.addEventListener(
@@ -273,14 +457,25 @@ form.addEventListener(
 
     e.preventDefault();
 
-    button.disabled = true;
-    button.textContent = "Submitting...";
 
-    success.classList.add("hidden");
-    errorBox.classList.add("hidden");
+    button.disabled = true;
+
+    button.textContent =
+      "Submitting...";
+
+
+    success.classList.add(
+      "hidden"
+    );
+
+
+    errorBox.classList.add(
+      "hidden"
+    );
 
 
     try{
+
 
       const formData =
         new FormData(form);
@@ -291,6 +486,7 @@ form.addEventListener(
           "https://forminit.com/f/2crw9bc8f8i",
           {
             method:"POST",
+
             body:formData
           }
         );
@@ -319,9 +515,15 @@ form.addEventListener(
       }
 
 
-      form.classList.add("hidden");
+      form.classList.add(
+        "hidden"
+      );
 
-      success.classList.remove("hidden");
+
+      success.classList.remove(
+        "hidden"
+      );
+
 
       success.scrollIntoView({
         behavior:"smooth"
@@ -330,15 +532,25 @@ form.addEventListener(
 
     }catch(error){
 
-      console.error(error);
+
+      console.error(
+        error
+      );
+
 
       errorBox.textContent =
         "Unable to submit the report.\n\n" +
         error.message;
 
-      errorBox.classList.remove("hidden");
 
-      button.disabled = false;
+      errorBox.classList.remove(
+        "hidden"
+      );
+
+
+      button.disabled =
+        false;
+
 
       button.textContent =
         "Submit Report";
@@ -350,5 +562,7 @@ form.addEventListener(
 
 </script>
 
+
 </body>
+
 </html>
