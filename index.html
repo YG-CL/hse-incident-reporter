@@ -16,14 +16,7 @@ body{
   margin:0;
   font-family:Arial,sans-serif;
   color:#17202a;
-
-  background:
-    linear-gradient(
-      rgba(244,246,248,.88),
-      rgba(244,246,248,.88)
-    ),
-    url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=2000&q=80')
-    center/cover fixed;
+  background:linear-gradient(135deg,#eef2f5,#dfe7ed);
 }
 
 .wrap{
@@ -240,85 +233,65 @@ let message = '';
 
 function prepareReport(){
 
-const location =
-document.getElementById('location').value.trim();
+  const location =
+    document.getElementById('location').value.trim();
 
-if(!location){
-
-alert('Please enter a location.');
-
-return;
-
-}
+  if(!location){
+    alert('Please enter a location.');
+    return;
+  }
 
 
-const description =
-document.getElementById('description').value.trim();
+  const description =
+    document.getElementById('description').value.trim();
 
-if(!description){
-
-alert('Please enter a description.');
-
-return;
-
-}
+  if(!description){
+    alert('Please enter a description.');
+    return;
+  }
 
 
-const type =
-document.getElementById('type').value;
+  const type =
+    document.getElementById('type').value;
 
 
-const severity =
-document.getElementById('severity').value;
+  const severity =
+    document.getElementById('severity').value;
 
 
-const t =
-new Date().toLocaleString();
+  const t =
+    new Date().toLocaleString();
 
 
-message =
-'NEW HSE REPORT\n\n' +
-
-'Location: ' +
-location +
-'\n' +
-
-'Type: ' +
-type +
-'\n' +
-
-'Severity: ' +
-severity +
-'\n' +
-
-'Description: ' +
-description +
-'\n' +
-
-'Reported: ' +
-t;
+  message =
+    'NEW HSE REPORT\n\n' +
+    'Location: ' + location + '\n' +
+    'Type: ' + type + '\n' +
+    'Severity: ' + severity + '\n' +
+    'Description: ' + description + '\n' +
+    'Reported: ' + t;
 
 
-document
-.getElementById('success')
-.classList
-.remove('hidden');
+  document
+    .getElementById('success')
+    .classList
+    .remove('hidden');
 
 
-document
-.getElementById('success')
-.scrollIntoView({
-behavior:'smooth'
-});
+  document
+    .getElementById('success')
+    .scrollIntoView({
+      behavior:'smooth'
+    });
 
 }
 
 
 function sendWhatsApp(){
 
-window.location.href =
-'https://wa.me/?text=' +
-encodeURIComponent(message);
+  window.location.href =
+    'https://wa.me/?text=' +
+    encodeURIComponent(message);
 
 }
 
