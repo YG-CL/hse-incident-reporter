@@ -16,7 +16,15 @@ body{
   margin:0;
   font-family:Arial,sans-serif;
   color:#17202a;
-  background:linear-gradient(135deg,#eef2f5,#dfe7ed);
+  min-height:100vh;
+
+  background:
+    linear-gradient(
+      rgba(235,240,244,0.86),
+      rgba(235,240,244,0.90)
+    ),
+    url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=2000&q=80')
+    center/cover fixed;
 }
 
 .wrap{
@@ -26,10 +34,18 @@ body{
 }
 
 .card{
-  background:#fff;
+  background:rgba(255,255,255,0.91);
+
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+
   border-radius:18px;
   padding:24px;
-  box-shadow:0 4px 18px rgba(0,0,0,.12);
+
+  box-shadow:
+    0 8px 30px rgba(0,0,0,.14);
+
+  border:1px solid rgba(255,255,255,0.75);
 }
 
 h1{
@@ -40,7 +56,7 @@ h1{
 .sub{
   margin:0 0 22px;
   color:#667085;
-  line-height:1.4;
+  line-height:1.45;
 }
 
 label{
@@ -54,10 +70,12 @@ textarea,
 input{
   width:100%;
   padding:13px;
+
   border:1px solid #d0d5dd;
   border-radius:9px;
+
   font-size:16px;
-  background:#fff;
+  background:rgba(255,255,255,0.96);
 }
 
 textarea{
@@ -69,9 +87,12 @@ textarea{
   width:100%;
   border:0;
   border-radius:10px;
+
   padding:14px;
+
   font-size:17px;
   font-weight:700;
+
   cursor:pointer;
   margin-top:20px;
 }
@@ -91,7 +112,8 @@ textarea{
 }
 
 .success{
-  background:#ecfdf3;
+  background:rgba(236,253,243,0.95);
+
   border-radius:10px;
   padding:14px;
   margin-top:18px;
@@ -103,9 +125,15 @@ textarea{
   margin-top:6px;
 }
 
+.photo-name{
+  font-size:13px;
+  color:#475467;
+  margin-top:8px;
+}
+
 .footer{
   text-align:center;
-  color:#667085;
+  color:#475467;
   font-size:12px;
   margin-top:18px;
 }
@@ -140,13 +168,9 @@ Quickly report an incident, hazard, near miss, fire-related incident, or other H
 <select id="type">
 
 <option>Incident</option>
-
 <option>Hazard</option>
-
 <option>Near Miss</option>
-
 <option>Fire-related Incident</option>
-
 <option>Other</option>
 
 </select>
@@ -157,11 +181,8 @@ Quickly report an incident, hazard, near miss, fire-related incident, or other H
 <select id="severity">
 
 <option>Minor</option>
-
 <option>Moderate</option>
-
 <option>Major</option>
-
 <option>Catastrophic</option>
 
 </select>
@@ -187,6 +208,8 @@ Quickly report an incident, hazard, near miss, fire-related incident, or other H
 <div class="hint">
 Optional. On a phone, this can open the camera.
 </div>
+
+<div id="photoName" class="photo-name"></div>
 
 
 <button
@@ -231,23 +254,59 @@ HSE Reporting System
 let message = '';
 
 
+// Display selected photo name
+
+document.getElementById('photo').addEventListener('change', function(){
+
+  const photoName =
+    document.getElementById('photoName');
+
+  if(this.files.length > 0){
+
+    photoName.textContent =
+      'Photo selected: ' +
+      this.files[0].name;
+
+  }else{
+
+    photoName.textContent = '';
+
+  }
+
+});
+
+
+// Prepare report
+
 function prepareReport(){
 
   const location =
-    document.getElementById('location').value.trim();
+    document
+      .getElementById('location')
+      .value
+      .trim();
 
   if(!location){
+
     alert('Please enter a location.');
+
     return;
+
   }
 
 
   const description =
-    document.getElementById('description').value.trim();
+    document
+      .getElementById('description')
+      .value
+      .trim();
 
   if(!description){
+
     alert('Please enter a description.');
+
     return;
+
   }
 
 
@@ -286,6 +345,9 @@ function prepareReport(){
 
 }
 
+
+// Current WhatsApp function
+// We will improve photo sharing next.
 
 function sendWhatsApp(){
 
