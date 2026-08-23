@@ -5,7 +5,10 @@
 
 <meta charset="utf-8">
 
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
 
 <title>HSE Report</title>
 
@@ -40,13 +43,16 @@ body{
 
 .card{
   background:rgba(255,255,255,0.91);
+
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
 
   border-radius:18px;
+
   padding:24px;
 
-  box-shadow:0 8px 30px rgba(0,0,0,.14);
+  box-shadow:
+    0 8px 30px rgba(0,0,0,.14);
 
   border:1px solid rgba(255,255,255,0.75);
 }
@@ -72,12 +78,15 @@ select,
 textarea,
 input{
   width:100%;
+
   padding:13px;
 
   border:1px solid #d0d5dd;
+
   border-radius:9px;
 
   font-size:16px;
+
   background:rgba(255,255,255,0.96);
 }
 
@@ -88,15 +97,19 @@ textarea{
 
 .btn{
   width:100%;
+
   border:0;
+
   border-radius:10px;
 
   padding:14px;
 
   font-size:17px;
+
   font-weight:700;
 
   cursor:pointer;
+
   margin-top:20px;
 }
 
@@ -105,33 +118,47 @@ textarea{
   color:#fff;
 }
 
-.footer{
-  text-align:center;
-  color:#475467;
-  font-size:12px;
-  margin-top:18px;
+.submit:disabled{
+  opacity:.65;
+  cursor:not-allowed;
 }
 
 .success{
   background:rgba(236,253,243,0.95);
+
   border-radius:10px;
 
   padding:14px;
+
   margin-top:18px;
 }
 
 .error{
   background:rgba(254,226,226,0.95);
+
   border-radius:10px;
 
   padding:14px;
+
   margin-top:18px;
 
   color:#991b1b;
+
+  word-break:break-word;
 }
 
 .hidden{
   display:none;
+}
+
+.footer{
+  text-align:center;
+
+  color:#475467;
+
+  font-size:12px;
+
+  margin-top:18px;
 }
 
 </style>
@@ -143,6 +170,7 @@ textarea{
 
 
 <div class="wrap">
+
 
 <div class="card">
 
@@ -170,7 +198,7 @@ Location
 
 <input
   id="location"
-  name="fi-text-location"
+  name="fi-text-hseLocation"
   type="text"
   placeholder="Enter location"
   required
@@ -184,7 +212,7 @@ Report type
 
 <select
   id="type"
-  name="fi-select-reportType"
+  name="fi-select-hseReportType"
   required
 >
 
@@ -218,7 +246,7 @@ Severity
 
 <select
   id="severity"
-  name="fi-select-severity"
+  name="fi-select-hseSeverity"
   required
 >
 
@@ -248,7 +276,7 @@ Description
 
 <textarea
   id="description"
-  name="fi-text-description"
+  name="fi-text-hseDescription"
   placeholder="Briefly describe what happened or what you observed..."
   required
 ></textarea>
@@ -342,6 +370,7 @@ form.addEventListener(
       "hidden"
     );
 
+
     errorBox.classList.add(
       "hidden"
     );
@@ -368,17 +397,26 @@ form.addEventListener(
         new FormData(form);
 
 
-      const { data, error } =
+      const result =
         await forminit.submit(
           FORM_ID,
           formData
         );
 
 
-      if(error){
+      console.log(
+        "Forminit response:",
+        result
+      );
+
+
+      if(result.error){
 
         throw new Error(
-          error.message
+          result.error.message ||
+          JSON.stringify(
+            result.error
+          )
         );
 
       }
@@ -402,14 +440,18 @@ form.addEventListener(
     }catch(err){
 
 
-      console.error(err);
+      console.error(
+        "Forminit error:",
+        err
+      );
 
 
       errorBox.textContent =
-        "Unable to submit the report. " +
+        "Unable to submit the report.\n\n" +
+        "Error: " +
         (
           err.message ||
-          "Please try again."
+          String(err)
         );
 
 
