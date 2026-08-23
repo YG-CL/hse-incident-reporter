@@ -43,16 +43,13 @@ body{
 
 .card{
   background:rgba(255,255,255,0.91);
-
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
 
   border-radius:18px;
-
   padding:24px;
 
-  box-shadow:
-    0 8px 30px rgba(0,0,0,.14);
+  box-shadow:0 8px 30px rgba(0,0,0,.14);
 
   border:1px solid rgba(255,255,255,0.75);
 }
@@ -78,15 +75,12 @@ select,
 textarea,
 input{
   width:100%;
-
   padding:13px;
 
   border:1px solid #d0d5dd;
-
   border-radius:9px;
 
   font-size:16px;
-
   background:rgba(255,255,255,0.96);
 }
 
@@ -97,19 +91,15 @@ textarea{
 
 .btn{
   width:100%;
-
   border:0;
-
   border-radius:10px;
 
   padding:14px;
 
   font-size:17px;
-
   font-weight:700;
 
   cursor:pointer;
-
   margin-top:20px;
 }
 
@@ -125,25 +115,21 @@ textarea{
 
 .success{
   background:rgba(236,253,243,0.95);
-
   border-radius:10px;
 
   padding:14px;
-
   margin-top:18px;
 }
 
 .error{
   background:rgba(254,226,226,0.95);
-
   border-radius:10px;
 
   padding:14px;
-
   margin-top:18px;
 
   color:#991b1b;
-
+  white-space:pre-wrap;
   word-break:break-word;
 }
 
@@ -153,11 +139,9 @@ textarea{
 
 .footer{
   text-align:center;
-
   color:#475467;
 
   font-size:12px;
-
   margin-top:18px;
 }
 
@@ -186,33 +170,29 @@ fire-related incident, or other HSE concern.
 </p>
 
 
-<form
-  id="hse-form"
->
+<form id="hse-form">
 
 
-<label for="location">
+<label for="reportLocation">
 Location
 </label>
 
-
 <input
-  id="location"
-  name="fi-text-hseLocation"
+  id="reportLocation"
+  name="fi-text-reportLocation"
   type="text"
   placeholder="Enter location"
   required
 >
 
 
-<label for="type">
+<label for="reportType">
 Report type
 </label>
 
-
 <select
-  id="type"
-  name="fi-select-hseReportType"
+  id="reportType"
+  name="fi-select-reportType"
   required
 >
 
@@ -239,14 +219,13 @@ Other
 </select>
 
 
-<label for="severity">
+<label for="reportSeverity">
 Severity
 </label>
 
-
 <select
-  id="severity"
-  name="fi-select-hseSeverity"
+  id="reportSeverity"
+  name="fi-select-reportSeverity"
   required
 >
 
@@ -269,14 +248,13 @@ Catastrophic
 </select>
 
 
-<label for="description">
+<label for="reportDescription">
 Description
 </label>
 
-
 <textarea
-  id="description"
-  name="fi-text-hseDescription"
+  id="reportDescription"
+  name="fi-text-reportDescription"
   placeholder="Briefly describe what happened or what you observed..."
   required
 ></textarea>
@@ -338,7 +316,7 @@ const forminit =
 
 
 const FORM_ID =
-  "iutxcgqyigf";
+  "2crw9bc8f8i";
 
 
 const form =
@@ -361,7 +339,7 @@ const errorBox =
 
 form.addEventListener(
   "submit",
-  async (e) => {
+  async function(e){
 
     e.preventDefault();
 
@@ -437,12 +415,12 @@ form.addEventListener(
       });
 
 
-    }catch(err){
+    }catch(error){
 
 
       console.error(
         "Forminit error:",
-        err
+        error
       );
 
 
@@ -450,8 +428,8 @@ form.addEventListener(
         "Unable to submit the report.\n\n" +
         "Error: " +
         (
-          err.message ||
-          String(err)
+          error.message ||
+          String(error)
         );
 
 
