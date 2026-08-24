@@ -112,7 +112,7 @@
       color: #7a271a;
     }
 
-    label {
+    label.field-label {
       display: block;
       font-weight: 700;
       margin: 16px 0 7px;
@@ -139,22 +139,33 @@
       resize: vertical;
     }
 
-    .photo-buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 4px;
+    /* PHOTO */
+
+    .photo-area {
+      margin-top: 16px;
     }
 
-    .photo-btn {
-      flex: 1;
+    .photo-title {
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    .photo-help {
+      font-size: 13px;
+      color: #667085;
+      margin-bottom: 10px;
+    }
+
+    .add-photo-btn {
+      width: 100%;
 
       border: 1px solid #d0d5dd;
 
-      border-radius: 9px;
+      border-radius: 10px;
 
-      padding: 13px;
+      padding: 14px;
 
-      font-size: 15px;
+      font-size: 16px;
 
       font-weight: 700;
 
@@ -162,24 +173,79 @@
 
       background: #fff;
 
-      text-align: center;
+      color: #17202a;
     }
 
-    .photo-btn:hover {
+    .add-photo-btn:hover {
       background: #f8f9fa;
     }
 
-    .photo-name {
+    .photo-status {
       font-size: 13px;
       color: #475467;
-      margin-top: 8px;
+      margin-top: 9px;
     }
 
-    .hint {
-      font-size: 13px;
-      color: #667085;
-      margin-top: 6px;
+    /* PHOTO MENU */
+
+    .photo-menu {
+      display: none;
+
+      margin-top: 8px;
+
+      background: #fff;
+
+      border: 1px solid #d0d5dd;
+
+      border-radius: 12px;
+
+      overflow: hidden;
+
+      box-shadow:
+        0 8px 25px rgba(0,0,0,0.12);
     }
+
+    .photo-menu.show {
+      display: block;
+    }
+
+    .photo-option {
+      width: 100%;
+
+      border: 0;
+
+      border-bottom: 1px solid #eaecf0;
+
+      background: #fff;
+
+      padding: 14px;
+
+      text-align: left;
+
+      font-size: 15px;
+
+      cursor: pointer;
+    }
+
+    .photo-option:last-child {
+      border-bottom: 0;
+    }
+
+    .photo-option:hover {
+      background: #f8f9fa;
+    }
+
+    .photo-option strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .photo-option span {
+      font-size: 12px;
+      color: #667085;
+    }
+
+    /* SUBMIT */
 
     .btn {
       width: 100%;
@@ -237,6 +303,7 @@
 
 </head>
 
+
 <body>
 
   <div class="wrap">
@@ -248,6 +315,7 @@
       <p class="sub">
         Quickly notify HSE of an urgent or critical incident requiring immediate attention.
       </p>
+
 
       <div class="notice">
 
@@ -267,9 +335,13 @@
         enctype="multipart/form-data"
       >
 
-        <!-- Name -->
 
-        <label for="name">
+        <!-- NAME -->
+
+        <label
+          class="field-label"
+          for="name"
+        >
           Your Name (Optional)
         </label>
 
@@ -281,9 +353,12 @@
         >
 
 
-        <!-- Location -->
+        <!-- LOCATION -->
 
-        <label for="location">
+        <label
+          class="field-label"
+          for="location"
+        >
           Location
         </label>
 
@@ -296,9 +371,12 @@
         >
 
 
-        <!-- Type -->
+        <!-- TYPE -->
 
-        <label for="type">
+        <label
+          class="field-label"
+          for="type"
+        >
           Type
         </label>
 
@@ -338,9 +416,12 @@
         </select>
 
 
-        <!-- Severity -->
+        <!-- SEVERITY -->
 
-        <label for="severity">
+        <label
+          class="field-label"
+          for="severity"
+        >
           Severity
         </label>
 
@@ -368,9 +449,12 @@
         </select>
 
 
-        <!-- Description -->
+        <!-- DESCRIPTION -->
 
-        <label for="description">
+        <label
+          class="field-label"
+          for="description"
+        >
           Description
         </label>
 
@@ -382,65 +466,112 @@
         ></textarea>
 
 
-        <!-- Photo -->
+        <!-- PHOTOS -->
 
-        <label>
-          Photo (Optional)
-        </label>
+        <div class="photo-area">
 
-        <div class="photo-buttons">
+          <div class="photo-title">
+            Photos (Optional)
+          </div>
 
-          <label
-            class="photo-btn"
-            for="cameraPhoto"
+          <div class="photo-help">
+            Add up to 3 photos to help HSE understand the incident.
+          </div>
+
+
+          <button
+            type="button"
+            class="add-photo-btn"
+            id="addPhotoButton"
           >
-            📷 Take Photo
-          </label>
+            📎 Add Photo(s)
+          </button>
 
-          <label
-            class="photo-btn"
-            for="galleryPhoto"
+
+          <!-- PHOTO MENU -->
+
+          <div
+            class="photo-menu"
+            id="photoMenu"
           >
-            🖼️ Choose Photo
-          </label>
+
+            <button
+              type="button"
+              class="photo-option"
+              id="takePhotoOption"
+            >
+              📷
+              <strong>Take Photo</strong>
+              <span>Use your camera</span>
+            </button>
+
+
+            <button
+              type="button"
+              class="photo-option"
+              id="albumOption"
+            >
+              🖼️
+              <strong>Choose from Album</strong>
+              <span>Select existing photos</span>
+            </button>
+
+
+            <button
+              type="button"
+              class="photo-option"
+              id="filesOption"
+            >
+              📁
+              <strong>Choose from Files</strong>
+              <span>Use Files, Drive, or another storage app</span>
+            </button>
+
+          </div>
+
+
+          <!-- CAMERA -->
+
+          <input
+            id="cameraInput"
+            type="file"
+            accept="image/*"
+            capture="environment"
+            hidden
+          >
+
+
+          <!-- ALBUM -->
+
+          <input
+            id="albumInput"
+            type="file"
+            accept="image/*"
+            multiple
+            hidden
+          >
+
+
+          <!-- FILES -->
+
+          <input
+            id="filesInput"
+            type="file"
+            accept="image/*"
+            multiple
+            hidden
+          >
+
+
+          <div
+            id="photoStatus"
+            class="photo-status"
+          ></div>
 
         </div>
 
 
-        <!-- Camera -->
-
-        <input
-          id="cameraPhoto"
-          name="fi-file-reportPhoto"
-          type="file"
-          accept="image/*"
-          capture="environment"
-          hidden
-        >
-
-
-        <!-- Gallery -->
-
-        <input
-          id="galleryPhoto"
-          type="file"
-          accept="image/*"
-          hidden
-        >
-
-
-        <div
-          id="photoName"
-          class="photo-name"
-        ></div>
-
-
-        <div class="hint">
-          Optional. You can take a new photo or choose an existing photo from your device.
-        </div>
-
-
-        <!-- Submit -->
+        <!-- SUBMIT -->
 
         <button
           class="btn submit"
@@ -449,10 +580,11 @@
           Submit Report
         </button>
 
+
       </form>
 
 
-      <!-- Success -->
+      <!-- SUCCESS -->
 
       <div
         id="success"
@@ -469,6 +601,7 @@
 
       </div>
 
+
     </div>
 
 
@@ -481,72 +614,265 @@
 
   <script>
 
-    const forminit = new Forminit();
+    const forminit =
+      new Forminit();
 
-    const FORM_ID = "2crw9bc8f8i";
+
+    const FORM_ID =
+      "2crw9bc8f8i";
+
 
     const form =
-      document.getElementById("emergency-form");
+      document.getElementById(
+        "emergency-form"
+      );
 
-    const cameraPhoto =
-      document.getElementById("cameraPhoto");
 
-    const galleryPhoto =
-      document.getElementById("galleryPhoto");
+    const addPhotoButton =
+      document.getElementById(
+        "addPhotoButton"
+      );
 
-    const photoName =
-      document.getElementById("photoName");
+
+    const photoMenu =
+      document.getElementById(
+        "photoMenu"
+      );
+
+
+    const cameraInput =
+      document.getElementById(
+        "cameraInput"
+      );
+
+
+    const albumInput =
+      document.getElementById(
+        "albumInput"
+      );
+
+
+    const filesInput =
+      document.getElementById(
+        "filesInput"
+      );
+
+
+    const photoStatus =
+      document.getElementById(
+        "photoStatus"
+      );
+
+
+    let selectedPhotos = [];
 
 
     /*
-      Camera photo selected
+      Open / close photo menu
     */
 
-    cameraPhoto.addEventListener(
-      "change",
+    addPhotoButton.addEventListener(
+      "click",
       function () {
 
-        if (this.files.length > 0) {
-
-          photoName.textContent =
-            "Photo selected: " +
-            this.files[0].name;
-
-        }
+        photoMenu.classList.toggle(
+          "show"
+        );
 
       }
     );
 
 
     /*
-      Gallery photo selected
-
-      Copy the selected gallery file
-      into the Forminit file input.
+      Take Photo
     */
 
-    galleryPhoto.addEventListener(
+    document
+      .getElementById(
+        "takePhotoOption"
+      )
+      .addEventListener(
+        "click",
+        function () {
+
+          photoMenu.classList.remove(
+            "show"
+          );
+
+          cameraInput.click();
+
+        }
+      );
+
+
+    /*
+      Choose from Album
+    */
+
+    document
+      .getElementById(
+        "albumOption"
+      )
+      .addEventListener(
+        "click",
+        function () {
+
+          photoMenu.classList.remove(
+            "show"
+          );
+
+          albumInput.click();
+
+        }
+      );
+
+
+    /*
+      Choose from Files
+    */
+
+    document
+      .getElementById(
+        "filesOption"
+      )
+      .addEventListener(
+        "click",
+        function () {
+
+          photoMenu.classList.remove(
+            "show"
+          );
+
+          filesInput.click();
+
+        }
+      );
+
+
+    /*
+      Add selected files
+    */
+
+    function addPhotos(files) {
+
+      const incoming =
+        Array.from(files);
+
+
+      if (
+        selectedPhotos.length +
+        incoming.length >
+        3
+      ) {
+
+        alert(
+          "You can add a maximum of 3 photos."
+        );
+
+        return;
+
+      }
+
+
+      selectedPhotos =
+        selectedPhotos.concat(
+          incoming
+        );
+
+
+      updatePhotoStatus();
+
+    }
+
+
+    /*
+      Display photo count
+    */
+
+    function updatePhotoStatus() {
+
+      if (
+        selectedPhotos.length === 0
+      ) {
+
+        photoStatus.textContent =
+          "";
+
+        return;
+
+      }
+
+
+      photoStatus.textContent =
+        selectedPhotos.length === 1
+          ? "1 photo selected"
+          : selectedPhotos.length +
+            " photos selected";
+
+    }
+
+
+    /*
+      Camera files
+    */
+
+    cameraInput.addEventListener(
       "change",
       function () {
 
         if (this.files.length > 0) {
 
-          const file =
-            this.files[0];
-
-          const dataTransfer =
-            new DataTransfer();
-
-          dataTransfer.items.add(file);
-
-          cameraPhoto.files =
-            dataTransfer.files;
-
-          photoName.textContent =
-            "Photo selected: " +
-            file.name;
+          addPhotos(
+            this.files
+          );
 
         }
+
+        this.value = "";
+
+      }
+    );
+
+
+    /*
+      Album files
+    */
+
+    albumInput.addEventListener(
+      "change",
+      function () {
+
+        if (this.files.length > 0) {
+
+          addPhotos(
+            this.files
+          );
+
+        }
+
+        this.value = "";
+
+      }
+    );
+
+
+    /*
+      Files / Drive files
+    */
+
+    filesInput.addEventListener(
+      "change",
+      function () {
+
+        if (this.files.length > 0) {
+
+          addPhotos(
+            this.files
+          );
+
+        }
+
+        this.value = "";
 
       }
     );
@@ -564,10 +890,14 @@
 
 
         const button =
-          form.querySelector(".submit");
+          form.querySelector(
+            ".submit"
+          );
 
 
-        button.disabled = true;
+        button.disabled =
+          true;
+
 
         button.textContent =
           "Submitting...";
@@ -575,6 +905,24 @@
 
         const formData =
           new FormData(form);
+
+
+        /*
+          Add multiple photos
+          using Forminit's [] syntax.
+        */
+
+        selectedPhotos.forEach(
+          function (file) {
+
+            formData.append(
+              "fi-file-reportPhoto[]",
+              file,
+              file.name
+            );
+
+          }
+        );
 
 
         const {
@@ -589,29 +937,42 @@
 
         if (error) {
 
-          console.error(error);
+          console.error(
+            error
+          );
+
 
           alert(
             "Unable to submit the report. Please try again."
           );
 
-          button.disabled = false;
+
+          button.disabled =
+            false;
+
 
           button.textContent =
             "Submit Report";
+
 
           return;
 
         }
 
 
-        form.classList.add("hidden");
+        form.classList.add(
+          "hidden"
+        );
 
 
         document
-          .getElementById("success")
+          .getElementById(
+            "success"
+          )
           .classList
-          .remove("hidden");
+          .remove(
+            "hidden"
+          );
 
       }
 
