@@ -6,7 +6,7 @@
 
   <meta
     name="viewport"
-    content="width=device-width,initial-scale=1"
+    content="width=device-width, initial-scale=1"
   >
 
   <title>Emergency Incident Report</title>
@@ -26,12 +26,44 @@
       min-height: 100vh;
 
       background:
-        linear-gradient(
-          rgba(235,240,244,0.86),
-          rgba(235,240,244,0.90)
+        radial-gradient(
+          circle at 15% 20%,
+          rgba(220, 38, 38, 0.28),
+          transparent 28%
         ),
-        url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=2000&q=80')
-        center/cover fixed;
+
+        radial-gradient(
+          circle at 85% 75%,
+          rgba(245, 158, 11, 0.20),
+          transparent 30%
+        ),
+
+        linear-gradient(
+          135deg,
+          #1b2026 0%,
+          #252b32 45%,
+          #15191e 100%
+        );
+
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+
+      background:
+        repeating-linear-gradient(
+          135deg,
+          transparent 0px,
+          transparent 42px,
+          rgba(255,255,255,0.025) 43px,
+          rgba(255,255,255,0.025) 44px
+        );
+
+      pointer-events: none;
     }
 
     .wrap {
@@ -41,18 +73,18 @@
     }
 
     .card {
-      background: rgba(255,255,255,0.91);
+      background: rgba(255,255,255,0.94);
 
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
 
       border-radius: 18px;
       padding: 24px;
 
       box-shadow:
-        0 8px 30px rgba(0,0,0,.14);
+        0 12px 40px rgba(0,0,0,0.30);
 
-      border: 1px solid rgba(255,255,255,0.75);
+      border: 1px solid rgba(255,255,255,0.80);
     }
 
     h1 {
@@ -194,7 +226,7 @@
     .footer {
       text-align: center;
 
-      color: #475467;
+      color: rgba(255,255,255,0.75);
 
       font-size: 12px;
 
@@ -264,7 +296,7 @@
         >
 
 
-        <!-- Incident Type -->
+        <!-- Type -->
 
         <label for="type">
           Type
@@ -375,7 +407,7 @@
         </div>
 
 
-        <!-- Camera input -->
+        <!-- Camera -->
 
         <input
           id="cameraPhoto"
@@ -387,7 +419,7 @@
         >
 
 
-        <!-- Gallery input -->
+        <!-- Gallery -->
 
         <input
           id="galleryPhoto"
@@ -408,6 +440,8 @@
         </div>
 
 
+        <!-- Submit -->
+
         <button
           class="btn submit"
           type="submit"
@@ -417,6 +451,8 @@
 
       </form>
 
+
+      <!-- Success -->
 
       <div
         id="success"
@@ -486,7 +522,7 @@
       Gallery photo selected
 
       Copy the selected gallery file
-      into the actual Forminit file input.
+      into the Forminit file input.
     */
 
     galleryPhoto.addEventListener(
