@@ -2,372 +2,586 @@
 <html lang="en">
 
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HSE Report</title>
+  <meta charset="utf-8">
 
-<style>
-*{box-sizing:border-box}
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
 
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  color:#17202a;
-  min-height:100vh;
-  background:
-    linear-gradient(rgba(235,240,244,.86),rgba(235,240,244,.90)),
-    url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=2000&q=80')
-    center/cover fixed;
-}
+  <title>Emergency Incident Report</title>
 
-.wrap{
-  max-width:620px;
-  margin:auto;
-  padding:24px 16px;
-}
+  <script src="https://forminit.com/sdk/v1/forminit.js"></script>
 
-.card{
-  background:rgba(255,255,255,.91);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-  border-radius:18px;
-  padding:24px;
-  box-shadow:0 8px 30px rgba(0,0,0,.14);
-  border:1px solid rgba(255,255,255,.75);
-}
+  <style>
 
-h1{
-  margin:0 0 6px;
-  font-size:28px;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-.sub{
-  margin:0 0 22px;
-  color:#667085;
-  line-height:1.45;
-}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #17202a;
+      min-height: 100vh;
 
-label{
-  display:block;
-  font-weight:700;
-  margin:16px 0 7px;
-}
+      background:
+        linear-gradient(
+          rgba(235,240,244,0.86),
+          rgba(235,240,244,0.90)
+        ),
+        url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=2000&q=80')
+        center/cover fixed;
+    }
 
-select,
-textarea,
-input{
-  width:100%;
-  padding:13px;
-  border:1px solid #d0d5dd;
-  border-radius:9px;
-  font-size:16px;
-  background:rgba(255,255,255,.96);
-}
+    .wrap {
+      max-width: 620px;
+      margin: auto;
+      padding: 24px 16px;
+    }
 
-textarea{
-  min-height:120px;
-  resize:vertical;
-}
+    .card {
+      background: rgba(255,255,255,0.91);
 
-.btn{
-  width:100%;
-  border:0;
-  border-radius:10px;
-  padding:14px;
-  font-size:17px;
-  font-weight:700;
-  cursor:pointer;
-  margin-top:20px;
-}
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
 
-.submit{
-  background:#b42318;
-  color:#fff;
-}
+      border-radius: 18px;
+      padding: 24px;
 
-.submit:disabled{
-  opacity:.65;
-  cursor:not-allowed;
-}
+      box-shadow:
+        0 8px 30px rgba(0,0,0,.14);
 
-.success{
-  background:rgba(236,253,243,.95);
-  border-radius:10px;
-  padding:14px;
-  margin-top:18px;
-}
+      border: 1px solid rgba(255,255,255,0.75);
+    }
 
-.error{
-  background:rgba(254,226,226,.95);
-  border-radius:10px;
-  padding:14px;
-  margin-top:18px;
-  color:#991b1b;
-  white-space:pre-wrap;
-  word-break:break-word;
-}
+    h1 {
+      margin: 0 0 6px;
+      font-size: 28px;
+    }
 
-.hidden{
-  display:none;
-}
+    .sub {
+      margin: 0 0 18px;
+      color: #667085;
+      line-height: 1.45;
+    }
 
-.hint{
-  font-size:13px;
-  color:#667085;
-  margin-top:6px;
-}
+    .notice {
+      background: #fff4ed;
+      border: 1px solid #f5c2a8;
+      border-radius: 10px;
 
-.photo-name{
-  font-size:13px;
-  color:#475467;
-  margin-top:8px;
-}
+      padding: 12px 14px;
+      margin-bottom: 20px;
 
-.footer{
-  text-align:center;
-  color:#475467;
-  font-size:12px;
-  margin-top:18px;
-}
-</style>
+      font-size: 13px;
+      line-height: 1.45;
+
+      color: #7a271a;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin: 16px 0 7px;
+    }
+
+    select,
+    textarea,
+    input[type="text"] {
+      width: 100%;
+
+      padding: 13px;
+
+      border: 1px solid #d0d5dd;
+
+      border-radius: 9px;
+
+      font-size: 16px;
+
+      background: rgba(255,255,255,0.96);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .photo-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .photo-btn {
+      flex: 1;
+
+      border: 1px solid #d0d5dd;
+
+      border-radius: 9px;
+
+      padding: 13px;
+
+      font-size: 15px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      background: #fff;
+
+      text-align: center;
+    }
+
+    .photo-btn:hover {
+      background: #f8f9fa;
+    }
+
+    .photo-name {
+      font-size: 13px;
+      color: #475467;
+      margin-top: 8px;
+    }
+
+    .hint {
+      font-size: 13px;
+      color: #667085;
+      margin-top: 6px;
+    }
+
+    .btn {
+      width: 100%;
+
+      border: 0;
+
+      border-radius: 10px;
+
+      padding: 14px;
+
+      font-size: 17px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      margin-top: 20px;
+    }
+
+    .submit {
+      background: #b42318;
+      color: #fff;
+    }
+
+    .submit:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .success {
+      background: rgba(236,253,243,0.95);
+
+      border-radius: 10px;
+
+      padding: 14px;
+
+      margin-top: 18px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .footer {
+      text-align: center;
+
+      color: #475467;
+
+      font-size: 12px;
+
+      margin-top: 18px;
+    }
+
+  </style>
 
 </head>
 
 <body>
 
-<div class="wrap">
+  <div class="wrap">
 
-<div class="card">
+    <div class="card">
 
-<h1>HSE Report</h1>
+      <h1>Emergency Incident Report</h1>
 
-<p class="sub">
-Quickly report an incident, hazard, near miss,
-fire-related incident, or other HSE concern.
-</p>
+      <p class="sub">
+        Quickly notify HSE of an urgent or critical incident requiring immediate attention.
+      </p>
 
-<form id="hse-form">
+      <div class="notice">
 
-<label for="reportLocation">Location</label>
+        <strong>Examples:</strong>
+        Fire, smoke, chemical spill or release, serious injury,
+        electrical incident, explosion, equipment failure, or other immediate hazards.
 
-<input
-  id="reportLocation"
-  name="fi-text-reportLocation"
-  type="text"
-  placeholder="Enter location"
-  required
->
+        <br><br>
 
+        For emergencies, follow the applicable emergency procedure first.
 
-<label for="reportType">Report type</label>
-
-<select
-  id="reportType"
-  name="fi-select-reportType"
-  required
->
-  <option value="Incident">Incident</option>
-  <option value="Hazard">Hazard</option>
-  <option value="Near Miss">Near Miss</option>
-  <option value="Fire-related Incident">Fire-related Incident</option>
-  <option value="Other">Other</option>
-</select>
+      </div>
 
 
-<label for="reportSeverity">Severity</label>
+      <form
+        id="emergency-form"
+        enctype="multipart/form-data"
+      >
 
-<select
-  id="reportSeverity"
-  name="fi-select-reportSeverity"
-  required
->
-  <option value="Minor">Minor</option>
-  <option value="Moderate">Moderate</option>
-  <option value="Major">Major</option>
-  <option value="Catastrophic">Catastrophic</option>
-</select>
+        <!-- Name -->
 
+        <label for="name">
+          Your Name (Optional)
+        </label>
 
-<label for="reportDescription">Description</label>
-
-<textarea
-  id="reportDescription"
-  name="fi-text-reportDescription"
-  placeholder="Briefly describe what happened or what you observed..."
-  required
-></textarea>
+        <input
+          id="name"
+          name="fi-sender-fullName"
+          type="text"
+          placeholder="Enter your name"
+        >
 
 
-<label for="photo">Photo</label>
+        <!-- Location -->
 
-<input
-  id="photo"
-  name="fi-file-photo"
-  type="file"
-  accept="image/*"
-  capture="environment"
->
+        <label for="location">
+          Location
+        </label>
 
-<div class="hint">
-Optional. On a phone, this can open the camera.
-</div>
-
-<div
-  id="photoName"
-  class="photo-name"
-></div>
+        <input
+          id="location"
+          name="fi-text-reportLocation"
+          type="text"
+          placeholder="Enter location"
+          required
+        >
 
 
-<button
-  id="submitButton"
-  class="btn submit"
-  type="submit"
->
-Submit Report
-</button>
+        <!-- Incident Type -->
 
-</form>
+        <label for="type">
+          Type
+        </label>
 
+        <select
+          id="type"
+          name="fi-select-reportType"
+        >
 
-<div id="success" class="success hidden">
+          <option value="Fire / Smoke">
+            Fire / Smoke
+          </option>
 
-<strong>Report Submitted Successfully</strong>
+          <option value="Chemical Spill / Release">
+            Chemical Spill / Release
+          </option>
 
-<p>
-Your HSE report has been received.
-</p>
+          <option value="Injury / Medical Incident">
+            Injury / Medical Incident
+          </option>
 
-</div>
+          <option value="Electrical Incident">
+            Electrical Incident
+          </option>
 
+          <option value="Explosion / Blast">
+            Explosion / Blast
+          </option>
 
-<div id="error" class="error hidden"></div>
+          <option value="Equipment / Structural Failure">
+            Equipment / Structural Failure
+          </option>
 
-</div>
+          <option value="Other Emergency">
+            Other Emergency
+          </option>
 
-<div class="footer">
-HSE Reporting System
-</div>
-
-</div>
-
-
-<script>
-
-const form =
-  document.getElementById("hse-form");
-
-const button =
-  document.getElementById("submitButton");
-
-const success =
-  document.getElementById("success");
-
-const errorBox =
-  document.getElementById("error");
-
-const photo =
-  document.getElementById("photo");
-
-const photoName =
-  document.getElementById("photoName");
+        </select>
 
 
-photo.addEventListener("change", function(){
+        <!-- Severity -->
 
-  if(this.files.length > 0){
+        <label for="severity">
+          Severity
+        </label>
 
-    photoName.textContent =
-      "Photo selected: " +
-      this.files[0].name;
+        <select
+          id="severity"
+          name="fi-select-reportSeverity"
+        >
 
-  }else{
+          <option value="Minor">
+            Minor
+          </option>
 
-    photoName.textContent = "";
+          <option value="Moderate">
+            Moderate
+          </option>
 
-  }
+          <option value="Major">
+            Major
+          </option>
 
-});
+          <option value="Critical">
+            Critical
+          </option>
 
-
-form.addEventListener("submit", async function(e){
-
-  e.preventDefault();
-
-  button.disabled = true;
-  button.textContent = "Submitting...";
-
-  success.classList.add("hidden");
-  errorBox.classList.add("hidden");
-
-
-  try{
-
-    const formData =
-      new FormData(form);
+        </select>
 
 
-    const response =
-      await fetch(
-        "https://forminit.com/f/2crw9bc8f8i",
-        {
-          method:"POST",
-          body:formData
+        <!-- Description -->
+
+        <label for="description">
+          Description
+        </label>
+
+        <textarea
+          id="description"
+          name="fi-text-reportDescription"
+          placeholder="Briefly describe what happened, what you observed, and any immediate action taken..."
+          required
+        ></textarea>
+
+
+        <!-- Photo -->
+
+        <label>
+          Photo (Optional)
+        </label>
+
+        <div class="photo-buttons">
+
+          <label
+            class="photo-btn"
+            for="cameraPhoto"
+          >
+            📷 Take Photo
+          </label>
+
+          <label
+            class="photo-btn"
+            for="galleryPhoto"
+          >
+            🖼️ Choose Photo
+          </label>
+
+        </div>
+
+
+        <!-- Camera input -->
+
+        <input
+          id="cameraPhoto"
+          name="fi-file-reportPhoto"
+          type="file"
+          accept="image/*"
+          capture="environment"
+          hidden
+        >
+
+
+        <!-- Gallery input -->
+
+        <input
+          id="galleryPhoto"
+          type="file"
+          accept="image/*"
+          hidden
+        >
+
+
+        <div
+          id="photoName"
+          class="photo-name"
+        ></div>
+
+
+        <div class="hint">
+          Optional. You can take a new photo or choose an existing photo from your device.
+        </div>
+
+
+        <button
+          class="btn submit"
+          type="submit"
+        >
+          Submit Report
+        </button>
+
+      </form>
+
+
+      <div
+        id="success"
+        class="success hidden"
+      >
+
+        <strong>
+          Report Submitted Successfully
+        </strong>
+
+        <p>
+          Your emergency incident report has been received.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="footer">
+      Emergency HSE Notification System
+    </div>
+
+  </div>
+
+
+  <script>
+
+    const forminit = new Forminit();
+
+    const FORM_ID = "2crw9bc8f8i";
+
+    const form =
+      document.getElementById("emergency-form");
+
+    const cameraPhoto =
+      document.getElementById("cameraPhoto");
+
+    const galleryPhoto =
+      document.getElementById("galleryPhoto");
+
+    const photoName =
+      document.getElementById("photoName");
+
+
+    /*
+      Camera photo selected
+    */
+
+    cameraPhoto.addEventListener(
+      "change",
+      function () {
+
+        if (this.files.length > 0) {
+
+          photoName.textContent =
+            "Photo selected: " +
+            this.files[0].name;
+
         }
-      );
 
-
-    const text =
-      await response.text();
-
-
-    console.log(
-      "Forminit response:",
-      response.status,
-      text
+      }
     );
 
 
-    if(!response.ok){
+    /*
+      Gallery photo selected
 
-      throw new Error(
-        "HTTP " +
-        response.status +
-        ": " +
-        text
-      );
+      Copy the selected gallery file
+      into the actual Forminit file input.
+    */
 
-    }
+    galleryPhoto.addEventListener(
+      "change",
+      function () {
+
+        if (this.files.length > 0) {
+
+          const file =
+            this.files[0];
+
+          const dataTransfer =
+            new DataTransfer();
+
+          dataTransfer.items.add(file);
+
+          cameraPhoto.files =
+            dataTransfer.files;
+
+          photoName.textContent =
+            "Photo selected: " +
+            file.name;
+
+        }
+
+      }
+    );
 
 
-    form.classList.add("hidden");
+    /*
+      Submit to Forminit
+    */
 
-    success.classList.remove("hidden");
+    form.addEventListener(
+      "submit",
+      async function (e) {
 
-    success.scrollIntoView({
-      behavior:"smooth"
-    });
+        e.preventDefault();
 
 
-  }catch(error){
+        const button =
+          form.querySelector(".submit");
 
-    console.error(error);
 
-    errorBox.textContent =
-      "Unable to submit the report.\n\n" +
-      "Error: " +
-      error.message;
+        button.disabled = true;
 
-    errorBox.classList.remove("hidden");
+        button.textContent =
+          "Submitting...";
 
-    button.disabled = false;
 
-    button.textContent = "Submit Report";
+        const formData =
+          new FormData(form);
 
-  }
 
-});
+        const {
+          data,
+          error
+        } =
+          await forminit.submit(
+            FORM_ID,
+            formData
+          );
 
-</script>
+
+        if (error) {
+
+          console.error(error);
+
+          alert(
+            "Unable to submit the report. Please try again."
+          );
+
+          button.disabled = false;
+
+          button.textContent =
+            "Submit Report";
+
+          return;
+
+        }
+
+
+        form.classList.add("hidden");
+
+
+        document
+          .getElementById("success")
+          .classList
+          .remove("hidden");
+
+      }
+
+    );
+
+  </script>
 
 </body>
 
